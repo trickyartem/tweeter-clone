@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Profile</title>
+</head>
+<body>
+<h1>Tweeter</h1>
+
+<a href="/profile-page" class="btn btn-primary">Go back to profile</a>
+
+<%comments.forEach((comment) => {%>
+    <div class="border border-primary shadow p-3 mr-2 ml-2 mb-5 bg-white rounded">
+        <p><%= comment.text %></p>
+        <small>posted by <%= comment.author %></small>
+    </div>
+<%
+})
+%>
+</body>
+</html>
+

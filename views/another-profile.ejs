@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="//cdn.muicss.com/mui-0.10.0/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="//cdn.muicss.com/mui-0.10.0/js/mui.min.js"></script>
+    <title>Profile</title>
+</head>
+<body>
+<div class="mb-3 ml-2 mr-2">
+    <h1>Tweeter</h1>
+
+    <h2><%=name%></h2>
+    <img src="<%= profilePhoto %>" alt="Profile photo">
+
+    <p>Bio: <%=status%></p>
+
+    <span>Total amount of likes: </span><span id="likes"><%=likes%></span><br>
+
+    <a href="/get-news-feed" class="btn btn-primary">Go to blog</a>
+</div>
+
+<% posts.forEach((item) => {
+%>
+<div class="border border-primary shadow p-3 mr-2 ml-2 mb-5 bg-white rounded" id="<%=item.post_id%>">
+    <h1><%=item.title%></h1>
+    <div>
+        <p><%=item.text%></p><br>
+    </div>
+    <span>Likes: </span><span class="<%=item.post_id%>"><%=item.likes%></span>
+    <button onclick="likePost(<%=item.post_id%>)" class="btn btn-primary">Like</button>
+    <small>poster by <%=item.author%></small>
+    <small><%=item.time%></small>
+    <label for="comment">
+        <input type="text" name="<%=item.post_id%>" min="1" max="50" placeholder="add comment">
+    </label>
+    <button onclick="addComment(<%=item.post_id%>)">Add</button>
+    <a class="btn btn-primary" href="/all-comments/<%=item.post_id%>">View all comments</a>
+    <% item.comments.forEach((comment) => {
+    %>
+    <div class="border border-primary shadow p-3 mr-2 ml-2 mb-5 bg-white rounded">
+        <p><%=comment.text%></p>
+        <small>posted by <%=comment.author%></small>
+    </div>
+    <%
+    })
+    %>
+
+</div>
+<%
+})
+%>
+
+<script>
+  function likePost(postId) {
+    const likes = document.getElementsByClassName(`${postId}`)[0].innerText;
+
+    fetch('/like-post', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({postId: postId})
+    }).then(function (res) {
+      res.json().then(function (res1) {
+        if (res1.result) {
+          const newLikes = parseInt(likes) + 1;
+          document.getElementsByClassName(`${postId}`)[0].innerText = `${newLikes}`;
+          document.getElementById('likes').innerText = `${res1.totalLikes}`;
+        } else {
+          const newLikes = parseInt(likes) + (-1);
+          document.getElementsByClassName(`${postId}`)[0].innerText = `${newLikes}`
+          document.getElementById('likes').innerText = `${res1.totalLikes}`;
+        }
+      });
+    })
+      .catch(function (err) {
+        console.error(err.message);
+      })
+  }
+
+  function addComment(postId) {
+    const post = document.getElementById(`${postId}`);
+    const comment = document.getElementsByName(`${postId}`)[0].value
+
+    fetch('/add-comment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({postId: postId, comment: comment})
+    }).then(function (res) {
+      res.json().then(function (r) {
+        const div = document.createElement('div');
+        div.innerHTML = r.comment;
+        post.appendChild(div);
+      }).catch(function (err) {
+        console.error(err);
+      })
+    }).catch(function (err) {
+      console.error(err);
+    })
+  }
+</script>
+</body>
+</html>

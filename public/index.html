@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        #register {
+            max-width: 75px;
+        }
+
+        #login {
+            max-width: 75px;
+        }
+
+
+        .button {
+            padding: 20px 40px;
+            background-color: rgba(0, 80, 181, 1);
+            border: 0;
+            color: white;
+            font-size: 20px;
+        }
+
+        .button:hover {
+            background-color: rgba(0, 80, 181, 0.6);
+        }
+
+        #logo {
+            max-width: 75px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div id="logo">
+    <h1>Tweeter</h1>
+</div>
+<div id="register">
+    <form action="/register-page" method="get">
+        <button class="button">Register</button>
+    </form>
+</div>
+<div id="login">
+    <form action="/login-page" method="get">
+        <button class="button">Login</button>
+    </form>
+</div>
+<a href="/reset-password-page" class="button">Reset password</a>
+</body>
+</html>
