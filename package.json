@@ -43,6 +43,8 @@
     "vash": "^0.12.9"
   },
   "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
     "@types/axios": "^0.14.0",
     "@types/bcrypt": "^3.0.0",
     "@types/body-parser": "^1.17.1",
@@ -62,10 +64,12 @@
     "@types/nodemailer": "^6.2.1",
     "@types/query-string": "^6.3.0",
     "@types/redis": "^2.8.14",
+    "babel-loader": "^8.0.6",
     "jade": "^1.11.0",
     "nodemon": "^1.19.1",
     "ts-node": "^8.3.0",
     "ts-node-dev": "^1.0.0-pre.42",
-    "typescript": "^3.6.2"
+    "typescript": "^3.6.2",
+    "webpack": "^4.41.5"
   }
 }

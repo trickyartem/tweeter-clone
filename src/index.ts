@@ -27,6 +27,7 @@ import addComment                        from "./api-requests/add-comment"
 import removeComment                     from "./api-requests/remove-post";
 import getFindUserPage                   from "./page-requests/getFindUserPage";
 import getAllCommentsPage                from "./page-requests/getAllCommentsPage";
+import multer    from "multer";
 
 database.connect();
 const redisStore = connectRedis(session);
@@ -55,7 +56,6 @@ app.use((req: Request, res: Response, next: any) => {
     next();
 });
 
-import multer    from "multer";
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/')
