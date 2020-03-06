@@ -33,7 +33,7 @@ database.connect();
 const redisStore = connectRedis(session);
 const client = redis.createClient();
 const app = express();
-const PORT = 3000;
+const PORT = 80;
 
 app.use(express.static('public'));
 app.use(express.static('uploads'));
