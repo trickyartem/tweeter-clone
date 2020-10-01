@@ -1,6 +1,7 @@
 import {Response, Request} from 'express-serve-static-core';
-import database            from "../database";
-import {MysqlError}        from "mysql";
+import database from "../database";
+import {MysqlError} from "mysql";
+import {writeHTMLFile} from "../utils";
 
 export default (req: Request, res: Response) => {
 
@@ -14,9 +15,7 @@ export default (req: Request, res: Response) => {
                 res.render('all-comments.ejs', {
                     comments
                 }, (error: Error, html: string) => {
-                    res.writeHead(200, {'Content-Type': 'text/html'});
-                    res.write(html);
-                    res.end();
+                    writeHTMLFile(res, html);
                 })
             });
     }

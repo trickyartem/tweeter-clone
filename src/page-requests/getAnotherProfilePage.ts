@@ -1,6 +1,7 @@
 import {Request, Response} from "express-serve-static-core"
 import database            from "../database";
 import {MysqlError}        from "mysql";
+import {writeHTMLFile} from "../utils";
 
 export default (req: Request, res: Response) => {
     if (req.session) {
@@ -52,9 +53,7 @@ export default (req: Request, res: Response) => {
                                             }, (error: Error, html: string) => {
                                                 if (error) console.error(error);
 
-                                                res.writeHead(200, {'Content-Type': 'text/html'});
-                                                res.write(html);
-                                                res.end();
+                                                writeHTMLFile(res, html);
                                             });
                                         }
                                     }))

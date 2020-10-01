@@ -1,4 +1,5 @@
 import {Request, Response} from "express-serve-static-core";
+import {writeHTMLFile} from "../utils";
 
 export default (req: Request, res: Response) => {
     res.render('form-template.ejs', {
@@ -12,11 +13,9 @@ export default (req: Request, res: Response) => {
             ['Age', 'number', 'age'],
             ['Profile photo', 'file', "photo"]
         ]
-    }, (err: Error, result: string) => {
+    }, (err: Error, html: string) => {
         if (err) throw err;
 
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write(result);
-        res.end();
+        writeHTMLFile(res, html);
     });
 }
