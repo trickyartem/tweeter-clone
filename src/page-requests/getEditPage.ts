@@ -1,4 +1,5 @@
 import {Request, Response} from "express-serve-static-core";
+import {writeHTMLFile} from "../utils";
 
 export default (req: Request, res: Response) => {
     if (req.session) {
@@ -13,9 +14,7 @@ export default (req: Request, res: Response) => {
                 ]
             }, ((err: Error, html: string) => {
                 if (err) console.error(err.message);
-                res.writeHead(200, {'Content-Type': 'text/html'});
-                res.write(html);
-                res.end();
+                writeHTMLFile(res, html);
             }));
         } else {
             res.redirect('/');

@@ -3,7 +3,7 @@ import * as fs             from "fs-extra";
 
 type InputType = "email" | "password";
 
-function inputValidate(input: string, type: InputType) {
+const inputValidate = (input: string, type: InputType) => {
     switch (type) {
         case "email":
             return /^[A-Za-z0-9._%+-]+@(?:[A-Za-z0-9-]+\.)+[A-Za-z]{2,10}$/g.test(input);
@@ -11,9 +11,9 @@ function inputValidate(input: string, type: InputType) {
             return /\w{6,24}/g.test(input);
     }
     return false;
-}
+};
 
-export function validateEmail(req: Request, res: Response, next: Function, path?: string) {
+const validateEmail = (req: Request, res: Response, next: Function, path?: string) => {
     const {email} = req.body;
 
     if (!inputValidate(email, "email")) {
@@ -23,7 +23,7 @@ export function validateEmail(req: Request, res: Response, next: Function, path?
     }
 }
 
-export function validatePassword(req: Request, res: Response, next: Function) {
+const validatePassword = (req: Request, res: Response, next: Function) => {
     const {password} = req.body;
 
     if (!inputValidate(password, "password")) {
@@ -31,8 +31,9 @@ export function validatePassword(req: Request, res: Response, next: Function) {
     } else {
         next();
     }
-}
-export const readFile = (res: Response, path: string) => {
+};
+
+const readFile = (res: Response, path: string) => {
     fs.readFile(path, (error: Error, response: Buffer) => {
         if (error) {
             res.writeHead(404);
@@ -44,3 +45,13 @@ export const readFile = (res: Response, path: string) => {
         res.end();
     });
 };
+
+const writeHTMLFile = (res: Response, html: string) => {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(html);
+    res.end();
+};
+
+export {
+    validateEmail, validatePassword, readFile, writeHTMLFile
+}
